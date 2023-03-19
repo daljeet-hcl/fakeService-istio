@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+spec:
+  selector:
+    app: payment1
+  ports:
+    - name: http
+      port: 80
+      targetPort: 9090
+  type: ClusterIP
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment1-deployment
+spec:
+  selector:
+    matchLabels:
+      app: payment1
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: payment1
+    spec:
+      serviceAccountName: payment-service-account
+      containers:
+        - name: payment1-container
+          image: nicholasjackson/fake-service:v0.23.1
+          ports:
+            - containerPort: 9090
+          env:
+          - name: LISTEN_ADDR
+            value:  "0.0.0.0:9090"
+          - name: UPSTREAM_URIS
+            value: "http://order-service/"
+          - name:  MESSAGE
+            value : "Hello World from payment1"
+          - name:  NAME
+            value: "payment1"
+          - name: SERVER_TYPE
+            value : "http"

@@ -1,0 +1,63 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-nothing
+  namespace: default
+spec:
+  {}
+
+---
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: "sample1-service-viewer"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: sample1
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        methods: ["GET"]
+
+---
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: "order1-service-viewer"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: order
+  action: ALLOW
+  rules:
+  - to:
+    - operation:
+        methods: ["GET"]
+
+---
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: "payment-service-viewer"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: payment1
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/sample1-service-account"]
+    to:
+    - operation:
+        methods: ["GET"]       
+
+---

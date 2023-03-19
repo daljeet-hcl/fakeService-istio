@@ -1,0 +1,36 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ordervirtualservice
+spec:
+  hosts:
+    - order-service
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: daljeet
+    route:
+    - destination:
+        host: order-service
+        subset: v2
+  - route:
+    - destination:
+        host: order-service
+        subset: v1
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: order-service
+spec:
+  host: order-service
+  subsets:
+    - name: v1
+      labels:
+        version: v1
+    - name: v2
+      labels:
+        version: v2
+
