@@ -128,7 +128,7 @@ spec:
     metadata:
       labels:
         app: order
-        version: v1
+        version: v2
     spec:
       serviceAccountName: order-service-account
       containers:
