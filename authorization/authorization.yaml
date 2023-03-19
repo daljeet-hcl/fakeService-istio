@@ -25,25 +25,7 @@ spec:
 
 ---
 
-apiVersion: security.istio.io/v1
-kind: AuthorizationPolicy
-metadata:
-  name: "order1-service-viewer"
-  namespace: default
-spec:
-  selector:
-    matchLabels:
-      app: order
-  action: ALLOW
-  rules:
-  - from:
-     - source:
-         principals: ["cluster.local/ns/default/sa/sample1-service-account"] 
-    to:
-     - operation:
-         methods: ["GET"]
 
----
 
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
@@ -64,3 +46,21 @@ spec:
         methods: ["GET"]       
 
 ---
+
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: "order-service-viewer"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: order
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        principals: ["cluster.local/ns/default/sa/sample1-service-account","cluster.local/ns/default/sa/payment-service-account"]
+    to:
+    - operation:
+        methods: ["GET"] 
