@@ -36,9 +36,12 @@ spec:
       app: order
   action: ALLOW
   rules:
-  - to:
-    - operation:
-        methods: ["GET"]
+  - from:
+     - source:
+         principals: ["cluster.local/ns/default/sa/sample1-service-account"] 
+    to:
+     - operation:
+         methods: ["GET"]
 
 ---
 

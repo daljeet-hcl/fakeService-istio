@@ -4,7 +4,7 @@ metadata:
   name: sample1-service
 spec:
   hosts:
-  - 192.168.29.137
+  - '*'
   gateways:
   - bookinfo-gateway
   http:

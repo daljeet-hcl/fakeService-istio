@@ -37,7 +37,7 @@ spec:
           - name: LISTEN_ADDR
             value:  "0.0.0.0:9090"
           - name: UPSTREAM_URIS
-            value: "http://payment-service:9090,http://order-service/"
+            value: "http://payment-service, http://order-service"
           - name:  MESSAGE
             value : "Hello World from sample1"
           - name:  NAME
