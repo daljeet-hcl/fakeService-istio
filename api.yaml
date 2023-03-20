@@ -113,7 +113,40 @@ spec:
             value: "order service"
           - name: SERVER_TYPE
             value : "http"
-     
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deployment-v3
+spec:
+  selector:
+    matchLabels:
+      app: order     
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: order
+        version: v3
+    spec:
+      serviceAccountName: order-service-account
+      containers:
+        - name: order-v3-container
+          image: nicholasjackson/fake-service:v0.23.1
+          ports:
+            - containerPort: 9090
+          env:
+          - name: LISTEN_ADDR
+            value:  "0.0.0.0:9090"
+          - name:  MESSAGE
+            value : "Hello from order-v3 service1"
+          - name:  NAME
+            value: "order service"
+          - name: SERVER_TYPE
+            value : "http"
+
 --- 
 apiVersion: apps/v1
 kind: Deployment

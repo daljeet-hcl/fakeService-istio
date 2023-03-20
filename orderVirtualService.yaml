@@ -13,6 +13,8 @@ spec:
     - headers:
         end-user:
           exact: daljeet12  #OR condition tested, if one of the condition is true.  
+    - uri:
+        prefix: "/sample1-service/api/v2/orders"      
     route:
     - destination:
         host: order-service
