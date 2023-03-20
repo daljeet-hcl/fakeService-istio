@@ -10,6 +10,9 @@ spec:
     - headers:
         end-user:
           exact: daljeet
+    - headers:
+        end-user:
+          exact: daljeet12  #OR condition tested, if one of the condition is true.  
     route:
     - destination:
         host: order-service
